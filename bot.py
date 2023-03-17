@@ -5,6 +5,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 import modules.chat_rights as rights
+from background import keep_alive
 from modules.commands_list import CMD_LIST
 from handlers.common import register_handlers_common
 
