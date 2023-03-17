@@ -76,6 +76,10 @@ def get_user_stats():
     return result
 
 
+def Sort(sub_li):
+    return (sorted(sub_li, key=lambda x: x[2]))
+
+
 def get_info_about_user_message(message):
     text = f'\n##### {datetime.now()} #####\n'
     text += f'ID: {message.from_user.id}, Text: {message.text}'
@@ -117,9 +121,9 @@ async def cmd_start(message: types.Message):
 async def cmd_access(message: types.Message):
     print(get_info_about_user_message(message))
     await message.answer("Условия вступления в наши вип ресурсы (чат/канал/марафон канал/обучающие видео и т.д.)\n"
-                         "🟠 3 месяца (пробный) : 340$\n"
-                         "🟡 1 год : 580$\n"
-                         "🟢 Бессрочно : 850$",
+                         "🟠 3 месяца (пробный) : 299$\n"
+                         "🟡 1 год : 599$\n"
+                         "🟢 Бессрочно : 999$",
                          reply_markup=access_kb, parse_mode='Markdown')
 
 
@@ -165,8 +169,7 @@ async def cmd_benefit(message: types.Message):
 
 async def cmd_stats(message: types.Message):
     print(get_info_about_user_message(message))
-    await message.answer(f"При нажатии на нее вылезет видео + пару скринов которые я дам тебе скоро ",
-                         parse_mode='Markdown')
+    await message.answer(f"Статистика нашей торговли в этом видео:\n https://youtu.be/zhb_BH3-AW8")
 
 
 async def cmd_check_subs(message: types.Message):
@@ -188,6 +191,7 @@ async def cmd_check_subs(message: types.Message):
 
         if subs_end:
             text = ''
+            subs_end = Sort(subs_end)
         for user in subs_end:
             status = "Активна" if user[1] != 0 else "Не активна"
             user_end = datetime.strptime(user[2], '%Y-%m-%d') - datetime.now()
@@ -218,7 +222,7 @@ async def process_three_month(callback_query: types.CallbackQuery, state: FSMCon
     print(get_info_about_user_callback(callback_query))
     await state.update_data(plan='3 месяца')
     await callback_query.message.edit_text(
-        f"Оплатите 340 usdt на любой из кошельков и прикрепите скриншот, либо ссылку на транзакцию.\n\n"
+        f"Оплатите 299 usdt на любой из кошельков и прикрепите скриншот, либо ссылку на транзакцию.\n\n"
         f"ERC20 USDT : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
         f"BEP20 USDT : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
         f"BEP20 BUSD : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
@@ -231,7 +235,7 @@ async def process_one_year(callback_query: types.CallbackQuery, state: FSMContex
     print(get_info_about_user_callback(callback_query))
     await state.update_data(plan='1 год')
     await callback_query.message.edit_text(
-        f"Оплатите 580 usdt на любой из кошельков и прикрепите скриншот, либо ссылку на транзакцию.\n\n"
+        f"Оплатите 599 usdt на любой из кошельков и прикрепите скриншот, либо ссылку на транзакцию.\n\n"
         f"ERC20 USDT : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
         f"BEP20 USDT : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
         f"BEP20 BUSD : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
@@ -244,7 +248,7 @@ async def process_indefinitely(callback_query: types.CallbackQuery, state: FSMCo
     print(get_info_about_user_callback(callback_query))
     await state.update_data(plan='бессрочно')
     await callback_query.message.edit_text(
-        f"Оплатите 850 usdt на любой из кошельков и прикрепите скриншот, либо ссылку на транзакцию.\n\n"
+        f"Оплатите 999 usdt на любой из кошельков и прикрепите скриншот, либо ссылку на транзакцию.\n\n"
         f"ERC20 USDT : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
         f"BEP20 USDT : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
         f"BEP20 BUSD : \n`0xBF10ecA7492bB0aB812A1635C8779E3E2A0E2147`\n"
